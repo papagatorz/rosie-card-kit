@@ -1,0 +1,4 @@
+# fill.py --art (resize/compress the card art)
+Pillow>=9.0
+# preview.py (headless Chromium render); after installing run: python3 -m playwright install chromium
+playwright>=1.40

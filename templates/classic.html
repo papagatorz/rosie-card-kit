@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="x-apple-disable-message-reformatting">
+<meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
+<title>{{HEADLINE}} {{RECIPIENT_NAME}}</title>
+<!--[if mso]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
+</head>
+<!-- Rosie card template: Classic. Slots are {{TOKENS}}. IF blocks and FOOTER markers are handled by tools/fill.py. -->
+<!--COLORS:{"COLOR_BG":"#f3efe4","COLOR_CARD":"#fffaf0","COLOR_TEXT":"#2f3a4f","COLOR_ACCENT":"#1b2a4a","COLOR_BUTTON":"#1b2a4a","_HEADLINE":"#1b2a4a","_SIGNOFF":"#1b2a4a","_PS":"#5b6475","_BUTTON_TEXT":"#fffaf0"}-->
+<body style="margin:0;padding:0;width:100%;background-color:{{COLOR_BG}};color-scheme:light dark;" bgcolor="{{COLOR_BG}}">
+<div style="display:none;font-size:1px;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;">{{PREHEADER}}&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&nbsp;</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{{COLOR_BG}}" style="width:100%;background-color:{{COLOR_BG}};">
+<tr><td align="center" style="padding:24px 12px;">
+<!--[if mso]><table role="presentation" width="480" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td width="480"><![endif]-->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:480px;margin:0 auto;">
+<!--IF:ENVELOPE_IMG_URL-->
+<tr><td align="center" style="padding:0 0 8px 0;"><img src="{{ENVELOPE_IMG_URL}}" width="480" alt="A closed envelope for {{RECIPIENT_NAME}}" style="display:block;width:100%;max-width:480px;height:auto;border:0;outline:none;text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;color:#1b2a4a;"></td></tr>
+<tr><td align="center" style="padding:0 0 20px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;color:#7a7a7a;">scroll down to open &#8595;</td></tr>
+<!--/IF:ENVELOPE_IMG_URL-->
+<tr><td>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{{COLOR_CARD}}" style="width:100%;background-color:{{COLOR_CARD}};border:1px solid #1b2a4a;border-radius:4px;outline:none;">
+<tr><td align="center" style="padding:26px 10px 0 10px;font-size:24px;line-height:1.2;letter-spacing:6px;">🎂 ✨ 🎉</td></tr>
+<!--IF:ART_SRC-->
+<tr><td align="center" style="padding:18px 0 0 0;font-size:0;line-height:0;"><img src="{{ART_SRC}}" width="478" alt="{{ART_ALT}}" style="display:block;width:100%;max-width:480px;height:auto;border:0;outline:none;text-decoration:none;font-family:Georgia,'Times New Roman',Times,serif;font-size:16px;line-height:1.4;color:#1b2a4a;"></td></tr>
+<!--/IF:ART_SRC-->
+<tr><td align="center" style="padding:14px 0 0 0;"><table role="presentation" width="80" cellpadding="0" cellspacing="0" border="0"><tr><td height="2" bgcolor="#b8975a" style="background-color:#b8975a;font-size:0;line-height:0;">&nbsp;</td></tr></table></td></tr>
+<tr><td align="center" style="padding:22px 28px 6px 28px;font-family:Georgia,'Times New Roman',Times,serif;">
+<div style="font-family:Georgia,'Times New Roman',Times,serif;font-size:32px;font-weight:normal;color:#1b2a4a;line-height:1.15;text-transform:none;margin-top:14px;">{{HEADLINE}}</div>
+<div style="font-family:Georgia,'Times New Roman',Times,serif;font-size:32px;font-weight:normal;color:{{COLOR_ACCENT}};line-height:1.15;margin-top:4px;font-style:italic;">{{RECIPIENT_NAME}}</div>
+</td></tr>
+<tr><td align="center" style="padding:14px 0 0 0;"><table role="presentation" width="80" cellpadding="0" cellspacing="0" border="0"><tr><td height="2" bgcolor="#b8975a" style="background-color:#b8975a;font-size:0;line-height:0;">&nbsp;</td></tr></table></td></tr>
+<tr><td align="center" style="padding:20px 36px 8px 36px;font-family:Georgia,'Times New Roman',Times,serif;font-size:17px;line-height:1.6;color:{{COLOR_TEXT}};">{{VERSE}}</td></tr>
+<!--IF:PS-->
+<tr><td align="center" style="padding:8px 36px 4px 36px;font-family:Georgia,'Times New Roman',Times,serif;font-size:14px;line-height:1.5;color:#5b6475;font-style:italic;">P.S. {{PS}}</td></tr>
+<!--/IF:PS-->
+<tr><td align="center" style="padding:16px 36px 8px 36px;">
+<!--IF:SIGNATURE_IMG_URL--><img src="{{SIGNATURE_IMG_URL}}" width="240" alt="{{SIGNOFF}}" style="display:block;margin:0 auto;width:240px;max-width:100%;height:auto;border:0;font-family:Georgia,'Times New Roman',Times,serif;font-size:21px;color:#1b2a4a;"><!--/IF:SIGNATURE_IMG_URL-->
+<!--IFNOT:SIGNATURE_IMG_URL--><div style="font-family:Georgia,'Times New Roman',Times,serif;font-size:21px;font-weight:bold;color:#1b2a4a;font-style:italic;font-weight:normal;">{{SIGNOFF}}</div><!--/IFNOT:SIGNATURE_IMG_URL-->
+</td></tr>
+<tr><td align="center" style="padding:12px 24px 26px 24px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center"><tr>
+<td align="center" bgcolor="{{COLOR_BUTTON}}" style="background-color:{{COLOR_BUTTON}};border-radius:24px;padding:12px 26px;">
+<a href="{{REPLY_MAILTO}}" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;font-weight:bold;line-height:1.2;color:#fffaf0;text-decoration:none;display:inline-block;">&#9993;&#65039; Write back to {{SENDER_NAME}}</a>
+</td></tr></table>
+</td></tr>
+</table>
+</td></tr>
+<!--FOOTER-->
+<tr><td align="center" style="padding:14px 8px 0 8px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:11px;line-height:1.4;color:#8a8a8a;"><a href="https://digitalswamp.io" style="color:#8a8a8a;text-decoration:none;">made with Rosie &middot; digitalswamp.io</a></td></tr>
+<!--/FOOTER-->
+</table>
+<!--[if mso]></td></tr></table><![endif]-->
+</td></tr></table>
+</body>
+</html>

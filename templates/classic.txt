@@ -1,0 +1,22 @@
+🎂 ✨ 🎉
+<!--IF:ART_SRC-->
+(Picture: {{ART_ALT}})
+<!--/IF:ART_SRC-->
+
+{{HEADLINE}} {{RECIPIENT_NAME}}
+
+{{VERSE}}
+
+<!--IF:PS-->
+P.S. {{PS}}
+
+<!--/IF:PS-->
+{{SIGNOFF}}
+
+Write back to {{SENDER_NAME}}: {{REPLY_MAILTO}}
+
+<!--FOOTER-->
+--
+made with Rosie · digitalswamp.io
+https://digitalswamp.io
+<!--/FOOTER-->

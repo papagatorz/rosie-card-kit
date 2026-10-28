@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+.venv-*/
+venv/
+env/
+
+# Filled cards and drafts (may contain real names and addresses)
+out/
+drafts/
+approved/
+sent/
+*.eml
+*.send.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
