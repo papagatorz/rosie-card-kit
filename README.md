@@ -2,6 +2,8 @@
 
 > **BETA.** This kit works and is in daily use, but it is still evolving. Feedback, bug reports and ideas are welcome on X: [@papagatorz](https://x.com/papagatorz).
 
+The kit writes standard MIME email (.eml) with the art inline, so it works with any mail system; Rosie can send through Gmail, Outlook, or the bot's own Grok Bot inbox.
+
 Rosie is a Grok Bot that designs greeting cards where **the email itself is the card**. There's no "click here to view your e-card" link and no card website. The birthday (or thank-you, or just-because) card arrives as an email body that looks like a card, with a plain-text twin for mail apps that don't show HTML.
 
 This repo is the card kit Rosie uses: four email-safe HTML templates, plus small Python tools to fill them, lint them and render previews. You can use it on its own with any mail sender that accepts HTML and plain-text parts.
@@ -192,6 +194,11 @@ tools/       fill.py, preview.py, check_email_safety.py, build_templates.py
 previews/    example renders (plain, -art, -dark, -art-dark, classic-override),
              example-values.json, example-colors.json, example art (PNG + compressed JPEG)
 ```
+
+## Beta known issues
+
+- Inline art has been checked in Gmail (web and phone) only. Outlook, Apple Mail/iCloud, Yahoo, and the bot-inbox path are untested, so please report what you see.
+- The bot-inbox send path has no Reply-To header and may not show inline (cid) art. Rosie adds the owner's reply address as a line on the card, and falls back to a hosted art link or no art.
 
 ## License
 
