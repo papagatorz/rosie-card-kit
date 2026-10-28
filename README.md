@@ -1,6 +1,6 @@
 # Rosie card kit (beta)
 
-> **BETA.** This kit works and is in daily use, but it is still evolving. Feedback, bug reports and ideas are welcome on X: [@papagatorz](https://x.com/papagatorz).
+> **BETA.** This kit works and is in daily use, but it is still evolving. Feedback, bug reports and ideas are welcome: [@papagatorz](https://x.com/papagatorz) on X or gator@mail.grokbot.com.
 
 The kit writes standard MIME email (.eml) with the art inline, so it works with any mail system; Rosie can send through Gmail, Outlook, or the bot's own Grok Bot inbox.
 
