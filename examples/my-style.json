@@ -1,0 +1,21 @@
+{
+  "_about": "Example Rosie style file. Every key is optional; leave one out to keep the template's own look. See 'Customize your card' in README.md. Swap \"art\" for your own photo or picture.",
+  "base": "heartfelt",
+  "colors": {"COLOR_ACCENT": "#8a3b5c", "COLOR_BUTTON": "#8a3b5c", "COLOR_BG": "#f7f1f6"},
+  "font": "rounded",
+  "body_font": "friendly-sans",
+  "art": "../previews/example-art-1280x720.png",
+  "art_alt": "Balloons and a birthday cake with three candles",
+  "art_source": "own-art",
+  "art_position": "side",
+  "align": "center",
+  "corner_radius": 24,
+  "border": "thick",
+  "border_color": "#d9b8cc",
+  "badge": "🌸 just for you 🌸",
+  "emoji_top": "🌸 🌷 🌸",
+  "footer": true,
+  "greeting": "Happy birthday, dear",
+  "signoff": "All my love, {sender}",
+  "button_text": "Send {sender} a note"
+}

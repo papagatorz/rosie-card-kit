@@ -13,6 +13,7 @@
 </head>
 <!-- Rosie card template: Funny. Slots are {{TOKENS}}. IF blocks and FOOTER markers are handled by tools/fill.py. -->
 <!--COLORS:{"COLOR_BG":"#f4f1ea","COLOR_CARD":"#fffdf8","COLOR_TEXT":"#333333","COLOR_ACCENT":"#2e6b3f","COLOR_BUTTON":"#2e6b3f","_HEADLINE":"#1f3a5f","_SIGNOFF":"#1f3a5f","_PS":"#6b6256","_BUTTON_TEXT":"#ffffff"}-->
+<!--STYLE:{"S_FONT_HEAD":"-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif","S_FONT_BODY":"-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif","S_FONT_SIGN":"-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif","S_HEAD_SIZE":"38px","S_NAME_SIZE":"44px","S_HEAD_TRANSFORM":"uppercase","S_RADIUS":"20px","S_BORDER":"2px solid #d9cfbf","S_ART_W":"476","S_ALIGN":"center","S_SIGN_MARGIN":"0 auto","S_BADGE_ALIGN":" align=\"center\"","S_HEAD_PAD":"22px 28px 6px 28px","S_RULE_PAD":"14px 0 0 0","S_BTN_PAD":"12px 24px 26px 24px","EMOJI_TOP":"🎊🎈🤪🎈🎊🎈🤪🎈🎊","EMOJI_BOTTOM":"🎁🍕🎂🎸🎁🍦🎂🎁","EMOJI_TOP_TXT":"🎊🎈🤪🎈🎊","NAME_SUFFIX":"! 🥳","NAME_SUFFIX_TXT":"!","_BORDER_WIDTH":2,"_BADGE":true}-->
 <body style="margin:0;padding:0;width:100%;background-color:{{COLOR_BG}};color-scheme:light dark;" bgcolor="{{COLOR_BG}}">
 <div style="display:none;font-size:1px;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;">{{PREHEADER}}&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&nbsp;</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{{COLOR_BG}}" style="width:100%;background-color:{{COLOR_BG}};">
@@ -24,31 +25,45 @@
 <tr><td align="center" style="padding:0 0 20px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;color:#7a7a7a;">scroll down to open &#8595;</td></tr>
 <!--/IF:ENVELOPE_IMG_URL-->
 <tr><td>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{{COLOR_CARD}}" style="width:100%;background-color:{{COLOR_CARD}};border:2px solid #d9cfbf;border-radius:20px;">
-<tr><td align="center" bgcolor="#faf7f2" style="background-color:#faf7f2;border-bottom:1px solid #e5dccd;border-radius:20px 20px 0 0;padding:14px 10px;font-size:22px;line-height:1.3;letter-spacing:4px;">🎊🎈🤪🎈🎊🎈🤪🎈🎊</td></tr>
-<!--IF:ART_SRC-->
-<tr><td align="center" style="padding:0;font-size:0;line-height:0;"><img src="{{ART_SRC}}" width="476" alt="{{ART_ALT}}" style="display:block;width:100%;max-width:480px;height:auto;border:0;outline:none;text-decoration:none;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.4;color:#1f3a5f;"></td></tr>
-<!--/IF:ART_SRC-->
-<tr><td align="center" style="padding:22px 28px 6px 28px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
-<!--IF:BADGE--><table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center"><tr><td bgcolor="#f3e3b5" style="background-color:#f3e3b5;color:#4a3b20;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;font-weight:bold;padding:6px 14px;border-radius:30px;">{{BADGE}}</td></tr></table><!--/IF:BADGE-->
-<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:38px;font-weight:800;color:#1f3a5f;line-height:1.15;text-transform:uppercase;margin-top:14px;">{{HEADLINE}}</div>
-<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:44px;font-weight:800;color:{{COLOR_ACCENT}};line-height:1.15;margin-top:4px;">{{RECIPIENT_NAME}}! 🥳</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{{COLOR_CARD}}" style="width:100%;background-color:{{COLOR_CARD}};border:{{S_BORDER}};border-radius:{{S_RADIUS}};">
+<!--IF:EMOJI_TOP-->
+<tr><td align="center" bgcolor="#faf7f2" style="background-color:#faf7f2;border-bottom:1px solid #e5dccd;border-radius:{{S_RADIUS}} {{S_RADIUS}} 0 0;padding:14px 10px;font-size:22px;line-height:1.3;letter-spacing:4px;">{{EMOJI_TOP}}</td></tr>
+<!--/IF:EMOJI_TOP-->
+<!--IF:ART_TOP-->
+<tr><td align="center" style="padding:0;font-size:0;line-height:0;"><img src="{{ART_SRC}}" width="{{S_ART_W}}" alt="{{ART_ALT}}" style="display:block;width:100%;max-width:480px;height:auto;border:0;outline:none;text-decoration:none;font-family:{{S_FONT_HEAD}};font-size:16px;line-height:1.4;color:#1f3a5f;"></td></tr>
+<!--/IF:ART_TOP-->
+<!--IF:ART_SIDE-->
+<tr><td style="padding:22px 20px 6px 20px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td width="150" valign="middle" style="width:150px;padding:0 14px 0 0;font-size:0;line-height:0;"><img src="{{ART_SRC}}" width="150" alt="{{ART_ALT}}" style="display:block;width:150px;max-width:100%;border-radius:8px;height:auto;border:0;outline:none;text-decoration:none;font-family:{{S_FONT_HEAD}};font-size:16px;line-height:1.4;color:#1f3a5f;"></td>
+<td align="{{S_ALIGN}}" valign="middle" style="font-family:{{S_FONT_HEAD}};">
+<!--/IF:ART_SIDE-->
+<!--IFNOT:ART_SIDE--><tr><td align="{{S_ALIGN}}" style="padding:{{S_HEAD_PAD}};font-family:{{S_FONT_HEAD}};">
+<!--/IFNOT:ART_SIDE--><!--IF:BADGE--><table role="presentation" cellpadding="0" cellspacing="0" border="0"{{S_BADGE_ALIGN}}><tr><td bgcolor="#f3e3b5" style="background-color:#f3e3b5;color:#4a3b20;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;font-weight:bold;padding:6px 14px;border-radius:30px;">{{BADGE}}</td></tr></table><!--/IF:BADGE-->
+<div style="font-family:{{S_FONT_HEAD}};font-size:{{S_HEAD_SIZE}};font-weight:800;color:#1f3a5f;line-height:1.15;text-transform:{{S_HEAD_TRANSFORM}};margin-top:14px;">{{HEADLINE}}</div>
+<div style="font-family:{{S_FONT_HEAD}};font-size:{{S_NAME_SIZE}};font-weight:800;color:{{COLOR_ACCENT}};line-height:1.15;margin-top:4px;">{{RECIPIENT_NAME}}{{NAME_SUFFIX}}</div>
 </td></tr>
-<tr><td align="center" style="padding:20px 36px 8px 36px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:17px;line-height:1.6;color:{{COLOR_TEXT}};">{{VERSE}}</td></tr>
+<!--IF:ART_SIDE--></table></td></tr>
+<!--/IF:ART_SIDE-->
+<tr><td align="{{S_ALIGN}}" style="padding:20px 36px 8px 36px;font-family:{{S_FONT_BODY}};font-size:17px;line-height:1.6;color:{{COLOR_TEXT}};">{{VERSE}}</td></tr>
 <!--IF:PS-->
-<tr><td align="center" style="padding:8px 36px 4px 36px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5;color:#6b6256;font-style:italic;">P.S. {{PS}}</td></tr>
+<tr><td align="{{S_ALIGN}}" style="padding:8px 36px 4px 36px;font-family:{{S_FONT_BODY}};font-size:14px;line-height:1.5;color:#6b6256;font-style:italic;">P.S. {{PS}}</td></tr>
 <!--/IF:PS-->
-<tr><td align="center" style="padding:16px 36px 8px 36px;">
-<!--IF:SIGNATURE_IMG_URL--><img src="{{SIGNATURE_IMG_URL}}" width="240" alt="{{SIGNOFF}}" style="display:block;margin:0 auto;width:240px;max-width:100%;height:auto;border:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:22px;color:#1f3a5f;"><!--/IF:SIGNATURE_IMG_URL-->
-<!--IFNOT:SIGNATURE_IMG_URL--><div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:22px;font-weight:bold;color:#1f3a5f;">{{SIGNOFF}}</div><!--/IFNOT:SIGNATURE_IMG_URL-->
+<!--IF:ART_BOTTOM-->
+<tr><td align="center" style="padding:16px 28px 0 28px;font-size:0;line-height:0;"><img src="{{ART_SRC}}" width="{{S_ART_W_INSET}}" alt="{{ART_ALT}}" style="display:block;width:100%;max-width:480px;border-radius:8px;height:auto;border:0;outline:none;text-decoration:none;font-family:{{S_FONT_HEAD}};font-size:16px;line-height:1.4;color:#1f3a5f;"></td></tr>
+<!--/IF:ART_BOTTOM-->
+<tr><td align="{{S_ALIGN}}" style="padding:16px 36px 8px 36px;">
+<!--IF:SIGNATURE_IMG_URL--><img src="{{SIGNATURE_IMG_URL}}" width="240" alt="{{SIGNOFF}}" style="display:block;margin:{{S_SIGN_MARGIN}};width:240px;max-width:100%;height:auto;border:0;font-family:{{S_FONT_SIGN}};font-size:22px;color:#1f3a5f;"><!--/IF:SIGNATURE_IMG_URL-->
+<!--IFNOT:SIGNATURE_IMG_URL--><div style="font-family:{{S_FONT_SIGN}};font-size:22px;font-weight:bold;color:#1f3a5f;">{{SIGNOFF}}</div><!--/IFNOT:SIGNATURE_IMG_URL-->
 </td></tr>
-<tr><td align="center" style="padding:12px 24px 26px 24px;">
-<table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center"><tr>
+<tr><td align="{{S_ALIGN}}" style="padding:{{S_BTN_PAD}};">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" align="{{S_ALIGN}}"><tr>
 <td align="center" bgcolor="{{COLOR_BUTTON}}" style="background-color:{{COLOR_BUTTON}};border-radius:24px;padding:12px 26px;">
-<a href="{{REPLY_MAILTO}}" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;font-weight:bold;line-height:1.2;color:#ffffff;text-decoration:none;display:inline-block;">&#9993;&#65039; Write back to {{SENDER_NAME}}</a>
+<a href="{{REPLY_MAILTO}}" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;font-weight:bold;line-height:1.2;color:#ffffff;text-decoration:none;display:inline-block;">&#9993;&#65039; {{BUTTON_TEXT}}</a>
 </td></tr></table>
 </td></tr>
-<tr><td align="center" bgcolor="#faf7f2" style="background-color:#faf7f2;border-top:1px solid #e5dccd;border-radius:0 0 20px 20px;padding:14px 10px;font-size:22px;line-height:1.3;letter-spacing:4px;">🎁🍕🎂🎸🎁🍦🎂🎁</td></tr>
+<!--IF:EMOJI_BOTTOM-->
+<tr><td align="center" bgcolor="#faf7f2" style="background-color:#faf7f2;border-top:1px solid #e5dccd;border-radius:0 0 {{S_RADIUS}} {{S_RADIUS}};padding:14px 10px;font-size:22px;line-height:1.3;letter-spacing:4px;">{{EMOJI_BOTTOM}}</td></tr>
+<!--/IF:EMOJI_BOTTOM-->
 </table>
 </td></tr>
 <!--FOOTER-->

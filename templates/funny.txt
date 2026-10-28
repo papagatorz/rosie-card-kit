@@ -1,4 +1,6 @@
-🎊🎈🤪🎈🎊
+<!--IF:EMOJI_TOP_TXT-->
+{{EMOJI_TOP_TXT}}
+<!--/IF:EMOJI_TOP_TXT-->
 <!--IF:ART_SRC-->
 (Picture: {{ART_ALT}})
 <!--/IF:ART_SRC-->
@@ -6,7 +8,7 @@
 {{BADGE}}
 <!--/IF:BADGE-->
 
-{{HEADLINE}} {{RECIPIENT_NAME}}!
+{{HEADLINE}} {{RECIPIENT_NAME}}{{NAME_SUFFIX_TXT}}
 
 {{VERSE}}
 
@@ -16,7 +18,7 @@ P.S. {{PS}}
 <!--/IF:PS-->
 {{SIGNOFF}}
 
-Write back to {{SENDER_NAME}}: {{REPLY_MAILTO}}
+{{BUTTON_TEXT}}: {{REPLY_MAILTO}}
 
 <!--FOOTER-->
 --

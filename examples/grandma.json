@@ -1,0 +1,8 @@
+{
+  "_about": "A per-person style: starts from my-style.json and changes two things.",
+  "extends": "my-style.json",
+  "greeting": "Happy birthday to my favorite",
+  "art_position": "top",
+  "font": "elegant-serif",
+  "body_font": "elegant-serif"
+}

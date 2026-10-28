@@ -77,7 +77,9 @@ Each slot is a `{{TOKEN}}` in both the `.html` and the `.txt` file. Values come 
 | `{{SENDER_NAME}}` | yes | For example `Sam`. It's used on the button. |
 | `{{ART_SRC}}` | optional | The card's picture: a full-width image above the headline. Either `cid:art.jpg` (set for you by `fill.py --art`) or a hosted `https://` URL. If it's empty, the block is removed. See [Art](#art). |
 | `{{ART_ALT}}` | required when `ART_SRC` is set | A few words describing the picture, for example `Balloons and a birthday cake`. It's the image's alt text, and the `.txt` gets a `(Picture: …)` line. |
-| `{{BADGE}}` | optional, **Funny only** | The tan badge text, for example `🚨 ALERT: BIRTHDAY IN PROGRESS 🚨`. If it's empty, the badge is removed. |
+| `{{BADGE}}` | optional | The small rounded label above the headline, for example `🚨 ALERT: BIRTHDAY IN PROGRESS 🚨`. Funny shows it whenever it's set; the other styles show it only when a style file or `--badge` turns it on (see [Customize your card](#customize-your-card)). If it's empty, the badge is removed. |
+| `{{BUTTON_TEXT}}` | optional | The reply button's label after ✉️. Empty means `Write back to {{SENDER_NAME}}`. Usually set with `button_text`. |
+| `{{EMOJI_TOP}}`, `{{EMOJI_BOTTOM}}`, `{{EMOJI_TOP_TXT}}`, `{{NAME_SUFFIX}}`, `{{NAME_SUFFIX_TXT}}` | filled by `fill.py` | The emoji strips and what follows the name. Their defaults are in the template's `STYLE` marker; change them with `emoji_top`, `emoji_bottom` and `name_suffix`. |
 | `{{COLOR_BG}}`, `{{COLOR_CARD}}`, `{{COLOR_TEXT}}`, `{{COLOR_ACCENT}}`, `{{COLOR_BUTTON}}` | optional | Color overrides; empty means the style's own palette. See [Custom colors](#custom-colors). |
 
 ### Markers
@@ -85,6 +87,8 @@ Each slot is a `{{TOKEN}}` in both the `.html` and the `.txt` file. Values come 
 - `<!--IF:SLOT--> … <!--/IF:SLOT-->`: the block is kept only when that slot has a value.
 - `<!--IFNOT:SLOT--> … <!--/IFNOT:SLOT-->`: the block is kept only when that slot is empty.
 - `<!--COLORS:{…}-->`: the style's default palette as JSON (plus the fixed headline, sign-off, P.S. and button-label colors used for contrast checks). `fill.py` reads it for the `COLOR_*` defaults and removes it.
+- `<!--STYLE:{…}-->`: the template's own fonts, sizes, corner radius, border, alignment, emoji and name ending as JSON. `fill.py` reads it for the `{{S_*}}` layout tokens (filled from a checked list, never from free text) and the emoji/name-ending defaults, and removes it.
+- `<!--IF:ART_TOP-->`, `<!--IF:ART_SIDE-->`, `<!--IF:ART_BOTTOM-->`: the three picture positions. `fill.py` keeps exactly one when there's a picture (`art_position`, default top).
 - `<!--FOOTER--> … <!--/FOOTER-->`: the small grey line "made with Rosie · digitalswamp.io". Pass `--no-footer` to drop it.
 
 `tools/fill.py` resolves every marker. A filled file contains no markers and no `{{…}}`.
@@ -109,6 +113,138 @@ Borders, emoji strips, badge, rules, headline, sign-off and P.S. keep the style'
 - **Example:** [`previews/example-colors.json`](previews/example-colors.json) (red accent and button, pale blue page) rendered on the Classic style:
 
 <img src="previews/classic-override.png" width="300" alt="Classic card with custom red accent and pale blue page">
+
+## Customize your card
+
+Colors are only the start. You can also change the card's layout, add your own picture, pick a font, change the greeting and sign-off wording, and save all of it as a **style file** you reuse for one person or for every card.
+
+Nothing changes unless you ask for it. With no style file and no style flags, `fill.py` writes exactly the same bytes as before.
+
+### Try it
+
+```bash
+# A ready-made style file (base template, colors, fonts, layout, wording and picture in one place):
+mkdir -p out
+python3 tools/fill.py --style examples/my-style.json previews/example-values.json out/alex-mine --from you@example.com
+
+# Or change one thing at a time with flags:
+python3 tools/fill.py classic previews/example-values.json out/alex-letter --from you@example.com \
+  --font typewriter --align left --corner-radius 0 --border none --no-emoji \
+  --greeting "Dear" --name-suffix "," --signoff "Yours, {sender}"
+```
+
+### Style files
+
+A style file is a small JSON file. Every key is optional; leave one out and the template keeps its own look. Here is [`examples/my-style.json`](examples/my-style.json):
+
+```json
+{
+  "base": "heartfelt",
+  "colors": {"COLOR_ACCENT": "#8a3b5c", "COLOR_BUTTON": "#8a3b5c", "COLOR_BG": "#f7f1f6"},
+  "font": "rounded",
+  "body_font": "friendly-sans",
+  "art": "../previews/example-art-1280x720.png",
+  "art_alt": "Balloons and a birthday cake with three candles",
+  "art_source": "own-art",
+  "art_position": "side",
+  "align": "center",
+  "corner_radius": 24,
+  "border": "thick",
+  "border_color": "#d9b8cc",
+  "badge": "🌸 just for you 🌸",
+  "emoji_top": "🌸 🌷 🌸",
+  "footer": true,
+  "greeting": "Happy birthday, dear",
+  "signoff": "All my love, {sender}",
+  "button_text": "Send {sender} a note"
+}
+```
+
+- **Use it:** `--style path/to/file.json`, or `--style NAME` for `styles/NAME.json`. If the style file sets `base`, you can leave the style name off the command (`fill.py --style mine.json VALUES.json OUT`).
+- **Per person:** save one file per person in `styles/` (for example `styles/grandma.json`) and pass `--style grandma` when you make their card.
+- **Start from another style:** `"extends": "my-style.json"` loads that file first, then applies this one's keys on top. [`examples/grandma.json`](examples/grandma.json) does this.
+- **A default for every card:** if `styles/default.json` exists, it's applied to every card first. Skip it for one card with `--no-default-style`.
+- **Notes for yourself:** keys starting with `_` (like `"_about"`) are ignored.
+- **Who wins:** template look < `styles/default.json` < `--style` file (after whatever it extends) < the individual flags. For colors, `--colors` wins over a style file's `colors`. A style's `greeting`, `signoff`, `button_text`, `badge` and `art_alt` replace the same text in the values JSON.
+- **Mistakes stop the run:** an unknown key, a wrong type, a value that isn't on the list, or an unsafe font stops `fill.py` with a message saying which one, before anything is written.
+
+### Every option
+
+| Option (style file) | Flag | What it does | Values | If you leave it out |
+|---|---|---|---|---|
+| `base` | the `STYLE` argument | Which template to start from. | `funny`, `heartfelt`, `kidfun`, `classic` | You name the style on the command line. |
+| `extends` | | Load another style file first. | a path or a name in `styles/` | |
+| `colors` | `--colors` | The five color slots. See [Custom colors](#custom-colors). | `{"COLOR_ACCENT": "#c0392b", …}` | The template's palette. |
+| `font` | `--font` | Font for all the text on the card. | a menu name (below), `style`, or a stack of email-safe fonts | The template's fonts. |
+| `heading_font` | `--heading-font` | Just the headline and the name. | same as `font` | `font` |
+| `body_font` | `--body-font` | Just the verse and the P.S. | same as `font` | `font` |
+| `signoff_font` | `--signoff-font` | Just the sign-off. | same as `font` | `font` |
+| `art_position` | `--art-position` | Where the picture goes: across the **top**, a small 150 px picture at the **side** of the headline, at the **bottom** above the sign-off (with rounded corners and a margin), or **none** (no picture even if one was given). | `top`, `side`, `bottom`, `none` | `top` |
+| `align` | `--align` | Center everything, or line the headline, verse, sign-off and button up on the left like a letter. | `center`, `left` | `center` |
+| `corner_radius` | `--corner-radius` | How round the card's corners are, in pixels. `0` is square. | `0`–`40` | The template's (4–28 px). |
+| `border` | `--border` | The card's outline. | `style` (the template's), `none`, `thin` (1 px), `medium` (2 px), `thick` (4 px) | `style` |
+| `border_color` | `--border-color` | The outline's color. | `#rgb` or `#rrggbb` | The template's border color. |
+| `badge` | `--badge TEXT`, `--no-badge` | The small rounded label above the headline. Text turns it on (in any style, not just Funny); `false` turns it off; `true` uses the `BADGE` text from the values JSON. | text up to 60 characters, `true`, `false` | Funny shows `BADGE` from the values; the other styles show no badge. |
+| `emoji` | `--no-emoji` | `false` removes the emoji strips at the top and bottom. | `true`, `false` | `true` |
+| `emoji_top` | `--emoji-top` | Your own top emoji line (also the first line of the text version). `""` removes it. | up to 60 characters | The template's emoji. |
+| `emoji_bottom` | `--emoji-bottom` | Your own bottom emoji strip (any style). `""` removes it. | up to 60 characters | The template's (Funny and Kid/Fun only). |
+| `name_suffix` | `--name-suffix` | What follows the name, in the card and in the text version: `!`, `,`, `! 🥳`, or `""` for nothing. | up to 12 characters | Funny `! 🥳`, Kid/Fun `! 🎉`, others nothing. |
+| `uppercase_headline` | `--uppercase-headline`, `--no-uppercase-headline` | Print the headline in capitals or as written. | `true`, `false` | Funny and Kid/Fun: capitals. Others: as written. |
+| `greeting` | `--greeting` | The headline line above the name, for example `Happy birthday,` or `Dear`. | up to 60 characters | `HEADLINE` from the values JSON. |
+| `signoff` | `--signoff` | The closing line, for example `All my love, {sender}`. | up to 80 characters | `SIGNOFF` from the values JSON. |
+| `button_text` | `--button-text` | The reply button's label (the ✉️ stays in front). | up to 40 characters | `Write back to {sender}` |
+| `footer` | `--no-footer` | `false` drops the small "made with Rosie" line. | `true`, `false` | `true` |
+| `art` | `--art` | Your picture: a JPEG or PNG on your computer. A relative path is read from the style file's folder. | a file path | No picture. |
+| `art_alt` | `--art-alt` | A few words describing the picture, for people who can't see it. Required with a picture. | up to 140 characters | `ART_ALT` from the values JSON. |
+| `art_source` | | Where the picture came from, as a reminder of the picture rules below. `generated` prints a reminder that it must not show a real person. | `own-photo`, `own-art`, `generated`, `licensed` | |
+
+In `greeting`, `signoff`, `button_text` and `badge`, `{name}` becomes the recipient's name and `{sender}` becomes yours (`RECIPIENT_NAME` and `SENDER_NAME` from the values JSON). The text version of the card always gets the same greeting, name ending, sign-off, button label, badge and top emoji as the HTML.
+
+### Font menu
+
+Many mail apps, including Gmail and Outlook for Windows, don't load web fonts, so every choice is a list of fonts that are already on people's computers and phones, ending with a generic fallback. The reader sees the first one their device has.
+
+| Name | Looks like | Stack |
+|---|---|---|
+| `classic-serif` | Georgia, a bookish serif | `Georgia, 'Times New Roman', Times, serif` |
+| `clean-sans` | the system font (San Francisco, Segoe UI, Roboto) | `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif` |
+| `elegant-serif` | Palatino, a graceful serif | `'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif` |
+| `friendly-sans` | Verdana, wide and easy to read | `Verdana, Geneva, Tahoma, sans-serif` |
+| `modern-sans` | Trebuchet, a little playful | `'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', Arial, sans-serif` |
+| `rounded` | rounded letters where available | `'Arial Rounded MT Bold', 'Trebuchet MS', ui-rounded, 'Helvetica Rounded', Verdana, sans-serif` |
+| `typewriter` | an old typewriter | `'Courier New', Courier, 'American Typewriter', monospace` |
+
+You can also give your own stack, such as `"Garamond, Georgia, serif"`. `fill.py` and the lint accept it only if every font is on the email-safe list in `tools/safe_fonts.py` and it ends with `serif`, `sans-serif` or `monospace`. The badge and the button keep the clean sans font so they stay crisp.
+
+Rounded letters show on Macs, iPhones and PCs with Microsoft Office (Arial Rounded); other devices fall back to Trebuchet or Verdana. Previews made on Linux show the fallback.
+
+### Your own picture
+
+- **Use your own photos or art, or pictures you have the right to use.** A photo of a real person goes on a card only if it's your own photo and you chose it. Generated art must never show a real person's face or likeness.
+- Any size works. `fill.py` shrinks it to 960 px wide (300 px for `side`, which shows at 150 px) and saves a JPEG under 300 KB, then embeds it inline as `cid:art.jpg` (see [Art](#art)). It warns if the picture is too small to look sharp.
+- `art_alt` is required. Describe what's in the picture in a few words.
+- `side` works best with a square-ish or landscape picture; the headline and name are printed 30% smaller next to it so long names still fit on a phone.
+
+### What the lint checks for custom cards
+
+`tools/check_email_safety.py` now also fails a card for: fonts outside the email-safe list or a stack without a generic fallback; an image with empty alt text or without a `width` attribute (Outlook needs one), or wider than 600; art that isn't sized email-safely (`width:100%; max-width:480px`, or a fixed width with `max-width:100%` for the side picture); text below 2.5:1 contrast on its background; an HTML body over 100 KB (Gmail clips messages at 102 KB); and an inline art file (`OUT.art.jpg`) over 300 KB (`--max-art-kb`) or wider than 960 px. It warns, without failing, about text between 2.5:1 and 4.5:1 (fine for big headlines, hard to read in small print) and about leftover `{{TOKENS}}`.
+
+### Examples
+
+| File | What it shows |
+|---|---|
+| [`examples/my-style.json`](examples/my-style.json) | Heartfelt base, rounded headline font, Verdana body, side picture, thick pink border, a badge, custom wording. |
+| [`examples/typewriter-letter.json`](examples/typewriter-letter.json) | Classic base as a plain letter: typewriter font, left-aligned, square corners, no border, no emoji, no picture, no footer. |
+| [`examples/kid-rocket.json`](examples/kid-rocket.json) | Kid/Fun with the picture at the bottom, space emoji, `!!! 🚀` after the name, headline as written. |
+| [`examples/grandma.json`](examples/grandma.json) | A per-person file that `extends` my-style.json and changes the greeting, the fonts and the picture position. |
+
+<img src="previews/custom-side.png" width="200" alt="Heartfelt card with a small picture beside the headline"> <img src="previews/custom-letter.png" width="200" alt="Left-aligned typewriter-style letter card"> <img src="previews/custom-bottom.png" width="200" alt="Kid/Fun card with the picture above the sign-off">
+
+### Limits
+
+- Border, rule, emoji-strip, badge, headline, sign-off and P.S. colors still come from the template (only `border_color` and the five color slots change).
+- The side picture is a fixed 150 px column, so on very narrow screens the headline wraps sooner.
+- Templates you build yourself without the `STYLE` marker still take colors and wording; the layout and font options are skipped with a warning.
 
 ## Art
 
@@ -148,6 +284,7 @@ python3 tools/fill.py --template PATH.html VALUES.json OUT_BASENAME --from ADDR 
 - `--no-footer`: drop the "made with Rosie" line.
 - `--colors JSON|FILE`: color overrides (see above).
 - `--art IMAGE [--art-width 960] [--art-max-kb 300]`: inline art (needs Pillow).
+- `--style FILE|NAME`, `--no-default-style`, and the style flags (`--font`, `--heading-font`, `--body-font`, `--signoff-font`, `--art-position`, `--align`, `--corner-radius`, `--border`, `--border-color`, `--badge`, `--no-badge`, `--emoji-top`, `--emoji-bottom`, `--no-emoji`, `--name-suffix`, `--uppercase-headline`, `--no-uppercase-headline`, `--greeting`, `--signoff`, `--button-text`, `--art-alt`): see [Customize your card](#customize-your-card). With a style file that sets `base`, leave out `STYLE`.
 
 It writes `OUT.html` and `OUT.txt` (plus `.art.jpg`, `.eml` and `.send.json` with `--art`). It refuses to overwrite any existing file, fails on an empty required slot, and fails on any unfilled slot or marker.
 
@@ -162,10 +299,10 @@ Renders a filled card to a PNG at 600 px wide (2× scale) with headless Chromium
 ### `tools/check_email_safety.py`
 
 ```
-python3 tools/check_email_safety.py FILE.html [...]
+python3 tools/check_email_safety.py [--max-art-kb 300] FILE.html [...]
 ```
 
-Lints templates or filled cards and exits 1 on any failure: style blocks, scripts, event handlers, CSS animation, web fonts, tracking params, redirectors, 1×1 pixels, non-https links or images, images without alt, and art that isn't `width:100%; max-width:480px`.
+Lints templates or filled cards and exits 1 on any failure: style blocks, scripts, event handlers, CSS animation, web fonts, tracking params, redirectors, 1×1 pixels, non-https links or images, images without alt or with empty alt, images without a `width` attribute or wider than 600, art that isn't sized email-safely, fonts outside the email-safe list, text below 2.5:1 contrast, HTML over 100 KB, and inline art over 300 KB or 960 px. It warns about text below 4.5:1 and leftover `{{TOKENS}}`. See [What the lint checks for custom cards](#what-the-lint-checks-for-custom-cards).
 
 ### `tools/build_templates.py`
 
@@ -178,7 +315,7 @@ Regenerates the four templates in `templates/` from their palettes. You only nee
 - **Hidden preheader** div (`display:none; mso-hide:all`).
 - **Tables for layout:** an outer table at 100% width, then an inner table at `width:100%; max-width:480px`.
 - **MSO wrapper:** Outlook gets a conditional `<!--[if mso]>` `<table width="480">` wrapper, since it ignores `max-width`.
-- **Inline CSS only**, with no `<style>` block and no external CSS. Fonts are system stacks only (sans: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial`; serif: `Georgia, 'Times New Roman'`). No web fonts.
+- **Inline CSS only**, with no `<style>` block and no external CSS. Fonts are system stacks only (sans: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial`; serif: `Georgia, 'Times New Roman'`; the [font menu](#font-menu) adds a few more installed-font stacks). No web fonts.
 - **No JavaScript** and no CSS animation. Decoration is emoji; the only content images are the optional art, signature and envelope images.
 - **No tracking:** no tracking pixels, open or click tracking, or link redirectors.
 
@@ -190,8 +327,11 @@ Rosie (the Grok Bot) follows a simple loop with its owner: **draft** a card with
 
 ```
 templates/   funny, heartfelt, kidfun, classic (.html + .txt)
-tools/       fill.py, preview.py, check_email_safety.py, build_templates.py
-previews/    example renders (plain, -art, -dark, -art-dark, classic-override),
+tools/       fill.py, preview.py, check_email_safety.py, build_templates.py,
+             safe_fonts.py (font menu + email-safe font list)
+examples/    example style files (my-style, typewriter-letter, kid-rocket, grandma)
+styles/      your own style files (git-ignored): NAME.json, default.json
+previews/    example renders (plain, -art, -dark, -art-dark, classic-override, custom-*),
              example-values.json, example-colors.json, example art (PNG + compressed JPEG)
 ```
 

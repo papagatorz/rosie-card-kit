@@ -21,3 +21,7 @@ sent/
 Thumbs.db
 .idea/
 .vscode/
+
+# Personal style files (may name real people or point at personal photos)
+styles/*
+!styles/README.md

@@ -1,0 +1,16 @@
+{
+  "_about": "Kid/Fun with the picture lower down (above the sign-off), custom emoji, no uppercase headline.",
+  "base": "kidfun",
+  "heading_font": "rounded",
+  "body_font": "friendly-sans",
+  "art_position": "bottom",
+  "art_source": "generated",
+  "emoji_top": "🚀🌟🪐🌟🚀",
+  "emoji_bottom": "🌙⭐🛸⭐🌙",
+  "name_suffix": "!!! 🚀",
+  "uppercase_headline": false,
+  "corner_radius": 12,
+  "border": "medium",
+  "border_color": "#4dabf7",
+  "button_text": "Tell {sender} about your day"
+}

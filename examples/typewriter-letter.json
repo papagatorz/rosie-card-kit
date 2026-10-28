@@ -1,0 +1,16 @@
+{
+  "_about": "A plain, letter-like card: typewriter font, left-aligned, square corners, no border, no emoji, no picture, no footer.",
+  "base": "classic",
+  "font": "typewriter",
+  "colors": {"COLOR_CARD": "#fdfbf6", "COLOR_BG": "#f5f3ee", "COLOR_TEXT": "#2a2a2a", "COLOR_ACCENT": "#7a2e1f", "COLOR_BUTTON": "#7a2e1f"},
+  "art_position": "none",
+  "align": "left",
+  "corner_radius": 0,
+  "border": "none",
+  "emoji": false,
+  "badge": "SPECIAL DELIVERY",
+  "footer": false,
+  "greeting": "Dear",
+  "name_suffix": ",",
+  "signoff": "Yours, {sender}"
+}
